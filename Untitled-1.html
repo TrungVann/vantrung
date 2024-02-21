@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý Sinh viên</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    #inputForm, #studentList {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+    }
+    input[type="text"], input[type="date"], input[type="number"], button {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Quản lý Sinh viên</h1>
+
+<div id="inputForm">
+    <h2>Nhập thông tin Sinh viên:</h2>
+    <label for="studentId">Mã SV:</label>
+    <input type="text" id="studentId">
+    <label for="fullName">Họ và Tên:</label>
+    <input type="text" id="fullName">
+    <label for="birthdate">Ngày sinh:</label>
+    <input type="date" id="birthdate">
+    <label for="className">Lớp học:</label>
+    <input type="text" id="className">
+    <label for="gpa">Điểm GPA:</label>
+    <input type="number" step="0.01" id="gpa">
+    <button onclick="addStudent()">Thêm Sinh viên</button>
+</div>
+
+<div id="studentList">
+    <h2>Danh sách Sinh viên:</h2>
+    <ul id="studentUl"></ul>
+</div>
+
+<script>
+// Đối tượng Sinh viên
+class Student {
+    constructor(id, fullName, birthdate, className, gpa) {
+        this.id = id;
+        this.fullName = fullName;
+        this.birthdate = birthdate;
+        this.className = className;
+        this.gpa = gpa;
+    }
+
+    updateInfo(fullName, birthdate, className, gpa) {
+        this.fullName = fullName;
+        this.birthdate = birthdate;
+        this.className = className;
+        this.gpa = gpa;
+    }
+}
+
+// Mảng lưu danh sách Sinh viên
+let students = [];
+
+// Hàm thêm Sinh viên
+function addStudent() {
+    const studentId = document.getElementById("studentId").value;
+    const fullName = document.getElementById("fullName").value;
+    const birthdate = document.getElementById("birthdate").value;
+    const className = document.getElementById("className").value;
+    const gpa = parseFloat(document.getElementById("gpa").value);
+
+    const newStudent = new Student(studentId, fullName, birthdate, className, gpa);
+    students.push(newStudent);
+    displayStudents();
+}
+
+// Hàm hiển thị danh sách Sinh viên
+function displayStudents() {
+    const studentUl = document.getElementById("studentUl");
+    studentUl.innerHTML = "";
+    
+    students.forEach(student => {
+        const li = document.createElement("li");
+        li.textContent = `Mã SV: ${student.id}, Họ và Tên: ${student.fullName}, Ngày sinh: ${student.birthdate}, Lớp học: ${student.className}, GPA: ${student.gpa}`;
+        studentUl.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
